@@ -52,7 +52,7 @@ module Setup
       File.open(proc_path, "w") {|file| file.write(proc)}
       File.open(script_path, "w") {|file| file.write(code)}
 
-      `tar -C #{script_dir} -cvf /tmp/#{name}.tar .`
+      `tar -C #{script_dir} -cvf #{Dir.tmpdir}/#{name}.tar .`
     end
 
     def run(input)
