@@ -4,7 +4,7 @@ module RailsAdmin
       class Run < RailsAdmin::Config::Actions::Base
 
         register_instance_option :only do
-          [Script, Setup::Algorithm]
+          [Script, Setup::Algorithm, Setup::UserScript]
         end
 
         register_instance_option :member do
@@ -21,7 +21,7 @@ module RailsAdmin
             if params[:_run]
               begin
                 if params[:background].present?
-                  do_flash_process_result Setup::AlgorithmExecution.process(algorithm_id: @object.id,
+                  do_flash_process_result Setup::AlgorithmExecution.process(object_id: @object.id,
                                                                             input: params.delete(:input),
                                                                             skip_notification_level: true)
                 else
