@@ -1814,6 +1814,46 @@ RailsAdmin.config do |config|
     fields :namespace, :name, :description, :parameters, :call_links
   end
 
+  config.model Setup::UserScript do
+    navigation_label 'Workflows'
+    weight -205
+    object_label_method { :custom_title }
+
+    configure :namespace, :enum_edit
+
+    edit do
+      field :namespace
+      field :name
+      field :description
+      field :language
+      field :dependencies, :code_mirror
+      field :code, :code_mirror do
+        help { 'Required' }
+      end
+    end
+    show do
+      field :namespace
+      field :name
+      field :description
+      field :language
+      field :dependencies do
+        pretty_value do
+          v = value.gsub('<', '&lt;').gsub('>', '&gt;')
+          "<pre>#{v}</pre>".html_safe
+        end
+      end
+      field :code do
+        pretty_value do
+          v = value.gsub('<', '&lt;').gsub('>', '&gt;')
+          "<pre><code class='script'>#{v}</code></pre>".html_safe
+        end
+      end
+      field :call_links
+      field :_id
+    end
+    fields :namespace, :language, :name, :description
+  end
+
   config.model Setup::Action do
     navigation_label 'Workflows'
     weight -202
