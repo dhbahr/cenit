@@ -17,9 +17,9 @@ module Cenit
           proc = "web: python web.py"
         end
 
-        dep_path = "#{script_dir}/#{dep_file}"
-        proc_path = "#{script_dir}/#{proc_file}"
-        script_path = "#{script_dir}/#{script_file}"
+        dep_path = "#{bundle_dir}/#{dep_file}"
+        proc_path = "#{bundle_dir}/#{proc_file}"
+        script_path = "#{bundle_dir}/#{script_file}"
 
         File.open(dep_path, "w") {|file| file.write(dependencies)}
         File.open(proc_path, "w") {|file| file.write(proc)}
