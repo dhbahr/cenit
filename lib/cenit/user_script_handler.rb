@@ -25,6 +25,7 @@ module Cenit
         File.open(proc_path, "w") {|file| file.write(proc)}
         File.open(script_path, "w") {|file| file.write(user_script.code)}
 
+        puts "tar cC #{bundle_dir} . | #{ENV['BUILDSTEP']}/buildstep #{user_script.name}"
         `tar cC #{bundle_dir} . | #{ENV['BUILDSTEP']}/buildstep #{user_script.name}`
       end
 
