@@ -1,0 +1,33 @@
+module Cenit
+  class UserScriptHandler
+    class << self
+
+      def deploy_script(user_script)
+        bundle_dir = Dir.mktmpdir user_script.name
+
+        proc_file = "Procfile"
+        dep_file = "Gemlock"
+        script_file = "web.rb"
+
+        proc = "web: ruby web.rb"
+
+        if user_script.language == :Python
+          dep_file = "requirements.txt"
+          script_file = "web.py"
+          proc = "web: python web.py"
+        end
+
+        dep_path = "#{script_dir}/#{dep_file}"
+        proc_path = "#{script_dir}/#{proc_file}"
+        script_path = "#{script_dir}/#{script_file}"
+
+        File.open(dep_path, "w") {|file| file.write(dependencies)}
+        File.open(proc_path, "w") {|file| file.write(proc)}
+        File.open(script_path, "w") {|file| file.write(code)}
+
+        `tar cC #{bundle_dir} . | #{ENV['BUILDSTEP']}/buildstep #{user_script.name}`
+      end
+
+    end
+  end
+end

@@ -30,29 +30,30 @@ module Setup
     end
 
     def bundle_script
-      script_dir = Dir.mktmpdir name
-
-      proc_file = "Procfile"
-      dep_file = "Gemlock"
-      script_file = "web.rb"
-
-      proc = "web: ruby web.rb"
-
-      if language == :Python
-        dep_file = "requirements.txt"
-        script_file = "web.py"
-        proc = "web: python web.py"
-      end
-
-      dep_path = "#{script_dir}/#{dep_file}"
-      proc_path = "#{script_dir}/#{proc_file}"
-      script_path = "#{script_dir}/#{script_file}"
-
-      File.open(dep_path, "w") {|file| file.write(dependencies)}
-      File.open(proc_path, "w") {|file| file.write(proc)}
-      File.open(script_path, "w") {|file| file.write(code)}
-
-      `tar -C #{script_dir} -cvf #{Dir.tmpdir}/#{name}.tar .`
+      # script_dir = Dir.mktmpdir name
+      #
+      # proc_file = "Procfile"
+      # dep_file = "Gemlock"
+      # script_file = "web.rb"
+      #
+      # proc = "web: ruby web.rb"
+      #
+      # if language == :Python
+      #   dep_file = "requirements.txt"
+      #   script_file = "web.py"
+      #   proc = "web: python web.py"
+      # end
+      #
+      # dep_path = "#{script_dir}/#{dep_file}"
+      # proc_path = "#{script_dir}/#{proc_file}"
+      # script_path = "#{script_dir}/#{script_file}"
+      #
+      # File.open(dep_path, "w") {|file| file.write(dependencies)}
+      # File.open(proc_path, "w") {|file| file.write(proc)}
+      # File.open(script_path, "w") {|file| file.write(code)}
+      #
+      # `tar -C #{script_dir} -cvf #{Dir.tmpdir}/#{name}.tar .`
+      Cenit::UserScriptHandler.deploy_script self
     end
 
     def run(input)
