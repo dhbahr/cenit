@@ -21,9 +21,9 @@ module Cenit
         proc_path = "#{bundle_dir}/#{proc_file}"
         script_path = "#{bundle_dir}/#{script_file}"
 
-        File.open(dep_path, "w") {|file| file.write(dependencies)}
+        File.open(dep_path, "w") {|file| file.write(user_script.dependencies)}
         File.open(proc_path, "w") {|file| file.write(proc)}
-        File.open(script_path, "w") {|file| file.write(code)}
+        File.open(script_path, "w") {|file| file.write(user_script.code)}
 
         `tar cC #{bundle_dir} . | #{ENV['BUILDSTEP']}/buildstep #{user_script.name}`
       end
